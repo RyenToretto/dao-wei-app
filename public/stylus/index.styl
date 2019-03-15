@@ -1,0 +1,343 @@
+$boxWidth=1200px;
+$themeColor=#e94840;
+$yaHei="Microsoft YaHei";
+$borderColor=#eaeaea;
+$wrapperColor=#f8f8f8;
+
+html
+    width 100%
+    height 100%
+    body
+        width 100%
+        height 100%
+        #wrap
+            width 100%
+            >header
+                .top_line1_box
+                    width 100%
+                    height 40px
+                    line-height 40px
+                    background-color: #f1f1f1
+                    &.fixed_header
+                        position fixed
+                        top 0
+                        left 0
+                        z-index 100
+                        opacity: 0.9;
+                        animation: fixedHeader 1s ease;
+                        @keyframes fixedHeader {
+                            0% {
+                                transform translateY(-100%)
+                            }
+                            100% {
+                                transform translateY(0%)
+                            }
+                        }
+                    .top_line1
+                        width $boxWidth
+                        height 100%
+                        margin 0 auto
+                        font-size 16px
+                        font-weight 700
+                        color #000
+                        .line1_left
+                            height 100%
+                            float left
+                            >img
+                                display inline-block
+                                font-size 14px
+                                vertical-align middle
+                            .switch_city
+                                color #898989
+                        .line1_right
+                            float right
+                            >li
+                                float left
+                                >a
+                                    padding 10px 15px
+                                &.active>a
+                                    color $themeColor
+            #content
+                width 100%
+                overflow-x hidden
+                .home_swiper_box
+                    position relative
+                    width 100%
+                    >.banner_box
+                        position relative
+                        width $boxWidth
+                        height 420px
+                        margin 0 auto
+                        .banner_nav1
+                            position absolute
+                            top 0
+                            left 0
+                            z-index 2
+                            width 180px
+                            height 100%
+                            font-weight 700
+                            background-color #757881
+                            >li
+                                width 100%
+                                margin-bottom 12px
+                                cursor pointer
+                                >p
+                                    width 180px
+                                    height 30px
+                                    line-height 30px
+                                    text-align center
+                                    color #fff
+                                    font-size 16px
+                                    .nav1_title
+                                        margin-right 20px
+                                .banner_nav2
+                                    display none
+                                &:hover
+                                    background-color: #60646d
+                                    >p
+                                        position relative
+                                        &:after
+                                            content: ""
+                                            position absolute
+                                            top 10px
+                                            right 0
+                                            display block
+                                            border 8px solid #fff
+                                            border-top-color transparent
+                                            border-left-color transparent
+                                            border-bottom-color transparent
+                                    .banner_nav2
+                                        display block
+                                        position absolute
+                                        top 0
+                                        right 0
+                                        width 160px
+                                        height 420px
+                                        transform translateX(100%)
+                                        background-color rgba(255, 255, 255, 0.8)
+                                        >li
+                                            width 100%
+                                            height 30px
+                                            line-height 30px
+                                            text-align center
+                                            font-size 16px
+                        .home_swiper
+                            width 100%
+                            height 100%
+                            background-color: #eee
+                            >li
+                                position absolute
+                                top 0
+                                left 0
+                                width 100%
+                                height 100%
+                                >a
+                                    width 100%
+                                    height 100%
+                                    >img
+                                        width 1920px
+                                        height 100%
+                                        transform translateX(-356px)
+                                        opacity 0
+                                        transition opacity 500ms
+                                &.active>a>img
+                                    opacity 1
+                        .points
+                            position absolute
+                            left 50%
+                            bottom 0
+                            transform(-50%)
+                            >li
+                                float left
+                                width 10px
+                                height 10px
+                                margin 5px
+                                border-radius 50%
+                                background-color rgba(0, 0, 0, 0.2)
+                                &.active
+                                    background-color: #fff
+                .service_wrapper
+                    width 100%
+                    .service_box
+                        width 100%
+                        >li
+                            width 100%
+                            padding-bottom 30px
+                            background-color $wrapperColor
+                            &:nth-child(odd)
+                                background-color: #fff
+                            .section
+                                font-size 16px
+                                width $boxWidth
+                                margin 0 auto
+                                padding-top 50px
+                                >p
+                                    font-size 28px
+                                    font-weight 700
+                                    text-align center
+                                    color #3d3838
+                                    font-family $yaHei
+                                .service_nav_box
+                                    position relative
+                                    width 100%
+                                    font-size 22px
+                                    color #3d3838
+                                    margin-top 15px
+                                    .service_nav
+                                        position absolute
+                                        left 50%
+                                        transform translateX(-50%)
+                                        >li
+                                            float left
+                                            margin-right 10px
+                                            a
+                                                color #3d3838
+                                                font-family "幼圆"
+                                                &:hover
+                                                    color $themeColor
+                                    .more_service
+                                        float right
+                                        margin-right 10px
+                                .service_card
+                                    padding-top 60px
+                                    width 100%
+                                    >li
+                                        float left
+                                        width 230px
+                                        height 345px
+                                        margin 0 5px
+                                        >a
+                                            display block
+                                            width 100%
+                                            height 100%
+                                            box-sizing border-box
+                                            padding 10px 10px
+                                            margin 0 5px
+                                            border 1px solid $borderColor
+                                            >img
+                                                display block
+                                                width 210px
+                                                height 210px
+                                            .service_name
+                                                height 28px
+                                                box-sizing border-box
+                                                line-height 28px
+                                                font-size 16px
+                                                font-weight 700
+                                            .service_desc
+                                                height 30px
+                                                font-size 13px
+                                                color #929292
+                                            .service_info
+                                                position relative
+                                                margin-top 28px
+                                                font-weight 600px
+                                                line-height 20px
+                                                color $themeColor
+                                                font-size 14px
+                                                .service_price
+                                                    .count_price
+                                                        font-size 20px
+                                                .see_detail
+                                                    position absolute
+                                                    right 0
+                                                    top 0
+                                                    width 76px
+                                                    height 24px
+                                                    border-radius 5px
+                                                    line-height 24px
+                                                    text-align center
+                                                    color #fff
+                                                    background-color $themeColor
+                                .service_keyword
+                                    width 100%
+                .service_pos_box
+                    width 100%
+                    background-color #fff
+                    .service_pos
+                        width $boxWidth
+                        margin 0 auto
+                        padding-top 60px
+                        .we_promise
+                            >h2
+                                font-size 30px
+                                text-align center
+                                font-family $yaHei
+                                font-weight 800
+                                margin 20px 0 10px
+                                >span
+                                    color $themeColor
+                            >p
+                                font-size 22px
+                                color #3d3838
+                                text-align center
+                        .service_promise
+                            position relative
+                            width 100%
+                            padding-top 20px
+                            height 66px
+                            font-family "微软雅黑"
+                            >ul
+                                position absolute
+                                left 50%
+                                transform translateX(-50%)
+                                >li
+                                    float left
+                                    color #1d1515
+                                    font-size 18px
+                                    >img
+                                        float left
+                                    >span
+                                        float left
+                                        margin 0 30px 0 10px
+                        .hot_city
+                            >dt
+                                float left
+                                font-family $yaHei
+                                font-size 18px
+                                font-weight 700
+                            >dd
+                                float right
+                                width 1090px
+                                line-height 30px
+                                >a
+                                    font-size 16px
+                                    color #898989
+                                    display inline-block;
+                                    width 9%
+                                    text-align: center;
+                                    font-weight 200
+                                    cursor pointer
+                                    font-family $yaHei
+                .footer_box
+                    width 100%
+                    background-color $wrapperColor
+                    .footer
+                        width $boxWidth
+                        margin 0 auto
+                        padding-top 30px
+                        .company
+                            margin-bottom 20px
+                            font-family $yaHei
+                            font-size 18px
+                            font-weight 700
+                            color #1d1515
+                        .company_ul
+                            font-size 16px
+                            >li
+                                float left
+                                width 120px
+                                height 60px
+                                margin-left 15px
+                                margin-bottom 20px
+                                &:first-child,
+                                &:nth-child(10)
+                                    margin-left 0
+                                >img
+                                    width 100%
+                                    height 100%
+                        .copyright
+                            clear both
+                            font-size 16px
+                            text-align center
+                            margin-bottom 30px

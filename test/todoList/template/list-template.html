@@ -1,0 +1,10 @@
+{{each todos as value index}}
+<!--<li>{{index}} -&#45;&#45; {{value.todo}}</li>-->
+<li class="todoItem">
+  <label>
+    <input type="checkbox"/>
+    <span>{{value.todo}}</span>
+  </label>
+  <button class="btn btn-danger" >删除</button>
+</li>
+{{/each}}

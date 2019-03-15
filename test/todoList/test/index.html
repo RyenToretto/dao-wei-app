@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script type="text/javascript" src="../js/template.js"></script>
+</head>
+<body>
+
+
+
+<button id="btn">切换</button>
+<div id="content"></div>
+<script id="tmp" type="text/html">
+  <h1>{{title}}</h1>
+  {{if isShow}}
+    <ul>
+      {{each list as value i}}
+      <li>索引 {{i + 1}} ：{{value}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</script>
+<script type="text/javascript">
+  var data = {
+    title: '标签',
+    list: ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他'],
+    isShow: true
+  };
+
+  showPage();
+  function showPage() {
+    var html = template('tmp', data);
+    console.log(html);
+    document.getElementById('content').innerHTML = html;
+  }
+  document.getElementById('btn').onclick = function () {
+    data.isShow = !data.isShow;
+    showPage();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery 练习</title>
+  
+  <link rel="stylesheet" href="index.css">
+  <style>
+    .todo-main li button{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div id="root">
+  <div class="todo-container">
+    <div class="todo-wrap">
+      <div class="todo-header">
+        <input id="newTodo" type="text" placeholder="请输入你的任务名称，按回车键确认"/>
+      </div>
+      <ul class="todo-main">
+
+      </ul>
+      <div class="todo-footer">
+        <label>
+          <input id="checkAll" type="checkbox"/>
+        </label>
+        <span>
+          已完成<span id="allCompletedTodos">0</span> / 全部<span id="allTodos">2</span>
+        </span>
+        <button id="removeAllCompleted" class="btn btn-danger">清除已完成任务</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript" src="js/template.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+<script type="text/javascript">
+  $(function () { // document.ready()   区别于window.onload
+    myMain().then(ret=>console.log(ret)).catch(err=>console.log(err))
+  });
+  
+  async function myMain(){
+    let dataObj;
+    
+    const todos = await new Promise((resolve, reject)=>{
+      $.get('template/data.json', function (response) {
+        if(response.code==="200"){
+          resolve(response.data)
+        }
+      });
+    });
+    
+    dataObj = {
+      todos
+    };
+  
+    // 使用模板引擎
+    $.get('template/list-template.html', function (data) {
+      console.log("59----");
+      // template.compile编译模板结构，返回的是render函数
+      let render = template.compile(data);
+      // render函数需要传入模板数据，进行数据渲染
+      let tmpHtml = render(dataObj);
+      $('.todo-main').append(tmpHtml);
+      // 显示todo个数
+      computedAllTodos();
+      computedAllComputedTodos();
+    });
+  
+  
+  
+    // 计算所有的todos个数
+    function computedAllTodos() {
+      let todoLen = $('.todoItem').length;
+      $('#allTodos').html(todoLen);
+    }
+  
+    // 计算所有已经完成todos的个数
+    function computedAllComputedTodos() {
+      let num =  0;
+      $('.todoItem input').each(function (index, item) {
+        if($(item).prop('checked')){
+          num += 1;
+        }
+      });
+      $('#allCompletedTodos').html(num);
+    }
+  
+    // 按键按起
+    $('#newTodo').keyup(function (event) {
+      if(event.keyCode === 13){
+        let newTodo = $(this).val();
+        if(!newTodo.trim()){
+          alert('输入的内容不能为空');
+          return;
+        }
+      
+        // 准备模板数据
+        let newObj = {
+          todo: newTodo,
+          isCompleted: false
+        };
+        dataObj.todos.unshift(newObj);
+        // 获取模板结构
+        $.get('template/todo-template.html', function (data) {
+          let render = template.compile(data);
+          // render渲染数据
+          let todoHtml = render(newObj);
+          $('.todo-main').prepend(todoHtml);
+        
+          // 更新页面
+          computedAllTodos();
+          computedAllComputedTodos();
+        
+          // 清空用户输入的内容
+          $('#newTodo').val('');
+        });
+      }
+    });
+  
+  
+    let $todoMain = $('.todo-main');
+    // 鼠标移入
+    $todoMain.on('mouseenter', '.todoItem', function () {
+      $(this).css('background', '#eee');
+      $(this).find('button').show();
+    });
+  
+    // 处理鼠标移出
+    $todoMain.on('mouseleave', '.todoItem', function () {
+      $(this).css('background', '#fff');
+      $(this).find('button').hide();
+    });
+  
+    // 按钮绑定事件  事件委托
+    $todoMain.on('click', '.todoItem button', function () {
+      // 判断点击的是否是button按钮，避免是其他的兄弟元素
+      // 动态添加class
+      $(this).addClass('del');
+      // 根据动态添加的class找到其对应的父元素li
+      // 删除当前的li
+      $('.del').parent().remove(); // empty()掏空自己
+    
+      computedAllTodos();
+      computedAllComputedTodos();
+    
+      // 判断全选按钮是否选中
+      if(!$('.todoItem input').length){
+        $('#checkAll').prop('checked', false);
+      }
+    });
+  
+  
+    // 点击每一个checkbox
+    $todoMain.on('click', '.todoItem input', function () {
+      let num = 0;
+      // 遍历累计选中的checkbox个数
+      $('.todoItem input').each(function (index, item) {
+        let isChecked = $(item).prop('checked');
+        if(isChecked){
+          num += 1;
+        }
+      });
+      
+      // 判断是否是全选
+      if(num === $('.todoItem input[type="checkbox"]').length){
+        $('#checkAll').prop('checked', true);
+      }else {
+        $('#checkAll').prop('checked', false);
+      }
+      // 更新页面已完成的个数
+      computedAllComputedTodos();
+    });
+    
+    let $todoMainInput = $('.todoItem input');
+    // 点击清除所有已经完后的任务
+    $('#removeAllCompleted').click(function () {
+      $todoMainInput.each(function (item, index) {
+        if($(this).prop('checked')){
+          $(this).parent().parent().addClass('del');
+          $('.del').remove();
+          computedAllTodos();
+          computedAllComputedTodos();
+        }
+      });
+    
+      if(!$todoMainInput.length){
+        $('#checkAll').prop('checked', false);
+      }
+    });
+  
+    // 选中/ 未选中
+    $('#checkAll').click(function () {
+      let isChecked = $(this).prop('checked');// 是否全选的状态值；
+      $('.todoItem input[type="checkbox"]').each(function (index, item) {
+        $(item).prop('checked', isChecked);
+        computedAllComputedTodos();
+      })
+    });
+  }
+  
+</script>
+</body>
+</html>
