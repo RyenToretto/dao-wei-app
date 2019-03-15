@@ -18,7 +18,6 @@ $(function () {
     /**** ajax 获取首页所有 json 数据 ****/
     $.get("http://127.0.0.1:3000/home_data", function(response){
         if(response.code === "200"){
-            console.log(response.data);
             $(".banner_box .banner_nav1").html(template("banner_nav",{data: response.data}));
             $(".service_wrapper .service_box").html(template("service_boxs",{data: response.data}));
         }
