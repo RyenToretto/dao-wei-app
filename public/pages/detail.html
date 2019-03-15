@@ -351,6 +351,14 @@
         <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
         <script type="text/javascript" src="http://127.0.0.1:3000/js/template-web.js"></script>
         <script type="text/javascript">
+            /**** 头部 fixed ****/
+            $(document).on("scroll", function (e) {
+                if($("#content")[0].getBoundingClientRect().top<0){
+                    $(".top_line1_box").addClass("fixed_header");
+                }else{
+                    $(".top_line1_box").removeClass("fixed_header");
+                }
+            });
             /**
              * 对日期进行格式化，
              * @param date 要格式化的日期
